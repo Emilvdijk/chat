@@ -18,8 +18,4 @@ public class ChatController {
     return message;
   }
 
-  @GetMapping("/")
-  public String home() {
-    return "chat.html";
-  }
 }
