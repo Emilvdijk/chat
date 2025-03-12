@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Chat App</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js" integrity="sha512-1QvjE7BtotQjkq8PxLeF6P46gEpBRXuskzIVgjFpekzFVF4yjRgrQvTG1MTOJ3yQgvTteKAcO7DSZI92+u/yZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
 <div id="chat-box"></div>
-<input id="message" placeholder="Type a message" type="text" autofocus>
-<button onclick="sendMessage()">Send</button>
-
+<label for="message">
+  <input id="message" placeholder="Type a message" type="text" autofocus>
+  <button onclick="sendMessage()">Send</button></label>
 <script>
   window.onload = function () {
        let username = sessionStorage.getItem("username");
@@ -34,10 +34,10 @@
                 });
    };
 
-var socket = new SockJS('http://localhost:8080/chat');
-var stompClient = Stomp.over(socket);
+  const socket = new SockJS('http://localhost:8080/chat');
+  const stompClient = Stomp.over(socket);
 
-function connect() {
+  function connect() {
  stompClient.connect({}, function () {
      stompClient.subscribe('/topic/messages', function (message) {
          showMessage(JSON.parse(message.body));
@@ -55,8 +55,8 @@ stompClient.send("/app/sendMessage", {}, JSON.stringify({
 }
 
 function showMessage(message) {
- var chatBox = document.getElementById("chat-box");
- chatBox.innerHTML += `<p><strong>${message.sender}:</strong> ${message.content}</p>`;
+  const chatBox = document.getElementById("chat-box");
+  chatBox.innerHTML += `<p><strong>${message.sender}:</strong> ${message.content}</p>`;
 }
 
 connect();
